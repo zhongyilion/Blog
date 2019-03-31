@@ -12,7 +12,8 @@
     <div class="nav">
 
         <%
-        if(request.getParameter("nowPage").equals("index")){
+            String nowPage=request.getParameter("nowPage");
+        if(nowPage!=null && nowPage.equals("index")){
         %>
             <a href="index.jsp" class="active">文章</a>
             <a href="whisper.jsp">微语</a>
@@ -22,7 +23,7 @@
 
 
         <%
-        }else  if(request.getParameter("nowPage").equals("about")){
+        }else  if(nowPage!=null && nowPage.equals("about")){
         %>
         <a href="index.jsp">文章</a>
         <a href="whisper.jsp">微语</a>
@@ -31,7 +32,7 @@
         <a href="about.jsp"  class="active">关于</a>
         <%
             }
-            else  if(request.getParameter("nowPage").equals("album")){
+            else  if(nowPage!=null && nowPage.equals("album")){
         %>
         <a href="index.jsp">文章</a>
         <a href="whisper.jsp">微语</a>
@@ -41,7 +42,7 @@
         <%
             }
 
-            else  if(request.getParameter("nowPage").equals("leacots")){
+            else  if(nowPage!=null && nowPage.equals("leacots")){
         %>
         <a href="index.jsp">文章</a>
         <a href="whisper.jsp">微语</a>
@@ -50,7 +51,7 @@
         <a href="about.jsp"  >关于</a>
         <%
             }
-            else  if(request.getParameter("nowPage").equals("whisper")){
+            else  if(nowPage!=null && nowPage.equals("whisper")){
         %>
         <a href="index.jsp">文章</a>
         <a href="whisper.jsp" class="active">微语</a>
