@@ -49,7 +49,7 @@
                 <p class="briefly">今日天气晴朗,庐山一日游</p>
               </div>
             </div>
-          </div>；
+          </div>
           <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
             <div class="item">
               <img src="res/img/xc_img5.jpg">
