@@ -54,7 +54,7 @@ body{font: 14px 宋体 Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-se
   overflow: hidden;
   /* autoprefixer: off */
   -webkit-box-orient: vertical;
-  /* autoprefixer: on */
+   /*autoprefixer: on */
 }
 .content .review-version{padding:20px; border-top: 1px dashed #dddddd;}
 .content .review-version img{float: left;}
@@ -96,7 +96,7 @@ body{font: 14px 宋体 Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-se
 .whisper-content .whisper-list .text-cont{line-height: 24px; margin-bottom: 28px;}
 .whisper-content .whisper-list .op-list{margin-top: 30px; overflow: hidden;}
 .whisper-content .whisper-list .op-list .like{ -webkit-user-select: none;
--moz-user-focus: none;
+/*-moz-user-focus: none;*/
 -moz-user-select: none;}
 .tlinks {
   text-indent: -9999px;
@@ -108,7 +108,7 @@ body{font: 14px 宋体 Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-se
 .whisper-content .whisper-list .op-list .like.active{color: #ff7f21;}
 .whisper-content .whisper-list .op-list p{float: left; cursor: pointer; color: #999999;}
 .whisper-content .whisper-list .op-list p.off{float: right; -webkit-user-select: none;
--moz-user-focus: none;
+/*-moz-user-focus: none;*/
 -moz-user-select: none;}
 .whisper-content .whisper-list .op-list p.off span{margin-right: 5px;}
 .whisper-content .whisper-list .op-list p.like{margin-right: 50px;}
@@ -248,4 +248,5 @@ body{font: 14px 宋体 Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-se
   .header .header-down-nav li a{font-size: 16px;}
 @media screen and (max-width: 320px){
   .whisper-content .cont .item img{width: 100%;}
+}
 }
