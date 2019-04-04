@@ -71,9 +71,42 @@
         <%--<li class="layui-nav-item"><a href="about.jsp">nihoa</a></li>--%>
         <%--<li class="layui-nav-item"><a href="about.jsp">登陆</a></li>--%>
     <%--</ul>--%>
-    <ul class="layui-nav layui-layout-right" style="background-color: white">
-        <li class="layui-nav-item" style="cursor: pointer"> <a id="login" style="color: black">登陆</a></li>
-        <li class="layui-nav-item" style="cursor: pointer"><a id="register" style="color: black">注册</a></li>
+    <ul class="layui-nav layui-layout-right" style="background-color: white" id="lis">
+        <li class="layui-nav-item" style="cursor: pointer;display: none;" id="one"><a id="login" style="color: black">登陆</a></li>
+        <li class="layui-nav-item" style="cursor: pointer;display: none" id="two"><a id="register" style="color: black">注册</a></li>
+        <script src="res/js/util/jquery-3.3.1.js"></script>
+        <script>
+            if(sessionStorage.getItem("user") == null){
+                // $("#lis").children().eq(0).css("display","none")
+                // $("#lis").eq(1).attr("display","block")
+                $("#one").css("display","")
+                $("#two").css("display","")
+            }else {
+                $("#one").css("display","none")
+                $("#two").css("display","none")
+            }
+        </script>
+        <li class="layui-nav-item" style="display: none" id="three"><a style="color: black">欢迎您</a></li>
+        <li class="layui-nav-item" lay-unselect="" style="display: none" id="four">
+            <a id="nickname" style="color: black"></a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;" id="edit">修改信息</a></dd>
+                <dd><a href="javascript:;">安全管理</a></dd>
+                <dd><a href="javascript:;" id="exit">退了</a></dd>
+            </dl>
+        </li>
+        <script>
+            if(sessionStorage.getItem("user") != null){
+                $("#three").css("display","")
+                $("#four").css("display","")
+                var user = JSON.parse(sessionStorage.getItem("user"))
+                $("#nickname").html('<img src="'+user.image+'" class="layui-nav-img"> '+user.nickname+'')
+
+                // $("#nickname").html('<img src="'+user.image+'" class="layui-nav-img">'+user.nickname)
+                // alert(user.nickname)
+                // $("#nn").html(user.nickname)
+            }
+        </script>
     </ul>
 </div>
 <%--登陆框--%>
@@ -132,7 +165,19 @@
             <input type="text" name="nickname" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
         </div>
     </div>
-
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <input type="radio" name="sex" value="男" title="男" checked="">
+            <input type="radio" name="sex" value="女" title="女">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">年龄:</label>
+        <div class="layui-input-block" style="width: 200px">
+            <input type="text" name="age" lay-verify="required|age" placeholder="请输入年龄" autocomplete="off" class="layui-input">
+        </div>
+    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">电话号码:</label>
         <div class="layui-input-block" style="width: 200px">
@@ -152,14 +197,60 @@
         </div>
     </div>
 </form>
+
+<%--信息编辑框--%>
+<form class="layui-form" id="demo3" style="display: none" action="#">
+    <div class="layui-form-item" style="margin-top: 20px">
+        <label class="layui-form-label">用户名:</label>
+        <div class="layui-input-block" style="width: 200px">
+            <input type="text" name="username" lay-verify="required|username" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">昵称:</label>
+        <div class="layui-input-block" style="width: 200px">
+            <input type="text" name="nickname" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <input type="radio" name="sex" value="男" title="男" checked="">
+            <input type="radio" name="sex" value="女" title="女">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">年龄:</label>
+        <div class="layui-input-block" style="width: 200px">
+            <input type="text" name="age" lay-verify="required|age" placeholder="请输入年龄" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">电话号码:</label>
+        <div class="layui-input-block" style="width: 200px">
+            <input type="text" name="phone" lay-verify="required|phone" placeholder="请输入电话号码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱:</label>
+        <div class="layui-input-block" style="width: 200px">
+            <input type="text" name="email" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo3">编辑</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
 <script src="res/layui/layui.js"></script>
 <script src="res/js/util/jquery-3.3.1.js"></script>
 <script>
 
     $(function () {
-        if(sessionStorage.getItem("user") != null){
+           if(sessionStorage.getItem("user") != null){
             // alert(sessionStorage.getItem("user").nickname)
-
             showuser(JSON.parse(sessionStorage.getItem("user")))
         }
 
@@ -192,6 +283,8 @@
                     content: $("#demo2")
                 })
             })
+
+
             /*
             * 为验证码输入提供异步的验证
             *
@@ -249,6 +342,11 @@
                 * */
                 if(meg == 1){
                     showuser(JSON.parse(sessionStorage.getItem("user")))
+                    $("#one").css("display","none")
+                    $("#two").css("display","none")
+                    $("#three").css("display","")
+                    $("#four").css("display","")
+                    $("#nickname").html('<img src="'+user.image+'" class="layui-nav-img"> '+user.nickname+'')
                     layer.closeAll()
                     element.init()
                     return false;
@@ -273,6 +371,23 @@
                     return true
                 }
             })
+
+            /*
+            * 为编辑框提供异步刷新
+            * */
+
+
+            form.on('submit(demo3)',function (data) {
+                // alert("？？？")
+                $.ajaxSettings.async = false;
+                $.post('/user/editUserMessage',data.field,function (user) {
+                    sessionStorage.setItem("user",JSON.stringify(user))
+                })
+                // layui.closeAll()
+                location.reload()
+                return false;
+            })
+
             /*
                 验证框方法
             */
@@ -304,26 +419,43 @@
     /**
      * 如果登陆过则显示用户的信息
      * @param user
+     *
      */
+
     function showuser(user) {
-        $("ul").empty()
-        var lis = '<li class="layui-nav-item"><a style="color: black">欢迎您</a></li>'
-        var li = '<li class="layui-nav-item">\n' +
-            '        <a style="color: black" id="nickname"></a>\n' +
-            '        <dl class="layui-nav-child">\n' +
-            '        <dd><a href="javascript:;">修改信息</a></dd>\n' +
-            '        <dd><a href="javascript:;">安全管理</a></dd>\n' +
-            '        <dd><a id="exit" style="color: black">退了</a></dd>\n' +
-            '        </dl>\n' +
-            '    </li>'
-        lis +=li
-        $("ul").html(lis)
-        $("#nickname").html('<img src="'+user.headerimg+'" class="layui-nav-img">&nbsp;&nbsp;'+user.nickname+'')
+
         $("#exit").click(function () {
             exit()
         })
-        layui.use(['element'],function () {
-            var element = layui.element;
+        /*
+        * 为编辑信息添加弹窗
+        * */
+        $("#edit").click(function () {
+            layer.open({
+                type:1,
+                title:'<h3>编辑</h3>',
+                skin: 'layui-layer-rim', //加上边框
+                area: '360px', //宽
+                content: $("#demo3"),
+                end : function() {
+                    $(".layui-layer-shade").css("display","none")}
+            })
+
+            var message = JSON.parse(sessionStorage.getItem("user"));
+            $("#demo3").find("[name='username']:input").val(message.userName)
+            // 设置为只读
+            $("#demo3").find("[name='username']:input").attr("readonly","readonly")
+            $("#demo3").find("[name='nickname']:input").val(message.nickname)
+            $("#demo3").find("[name='age']:input").val(message.age)
+            $("#demo3").find("[value='女']:input").attr("checked",'checked')
+            $("#demo3").find("[name='phone']:input").val(message.telephone)
+            $("#demo3").find("[name='email']:input").val(message.email)
+
+        })
+
+        layui.use(['element','form'],function () {
+            var element = layui.element,form = layui.form;
+
             element.init()
         })
     }

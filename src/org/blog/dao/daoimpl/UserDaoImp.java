@@ -17,7 +17,7 @@ public class UserDaoImp extends BaseDB implements UserDao {
     @Override
     public User login(String name, String psw) {
         JdbcTemplate jdbcTemplate = jdbcTemplate();
-        String sql = "select * from user where username = ? and password = ?";
+        String sql = "select * from user where user_name = ? and password = ?";
         User user = null;
         try {
             user =  jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<User>(User.class),name,psw);
@@ -34,8 +34,8 @@ public class UserDaoImp extends BaseDB implements UserDao {
     @Override
     public void register(User user) {
         JdbcTemplate jdbcTemplate = jdbcTemplate();
-        String sql = "insert into user values (null,?,?,?,'res/imgs/1.jpg')";
-        jdbcTemplate.update(sql,user.getUsername(),user.getPassword(),user.getNickname());
+        String sql = "insert into user values (null,?,?,?,?,?,?,?,'res/imgs/1.jpg')";
+        jdbcTemplate.update(sql,user.getUserName(),user.getPassword(),user.getNickname(),user.getSex(),user.getAge(),user.getTelephone(),user.getEmail());
     }
 
     /**
@@ -46,12 +46,19 @@ public class UserDaoImp extends BaseDB implements UserDao {
     @Override
     public User queryByName(String name) {
         JdbcTemplate jdbcTemplate = jdbcTemplate();
-        String sql = "select * from user where username = ?";
+        String sql = "select * from user where user_name = ?";
         User user=null;
         try{
            user =  jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<User>(User.class),name);
         }catch (Exception e){
         }
         return user;
+    }
+
+    @Override
+    public void editUserMessage(User user) {
+        JdbcTemplate jdbcTemplate = jdbcTemplate();
+        String sql = "update user set nickname=?,sex=?,age=?,telephone=?,email=? where user_id = ?";
+        jdbcTemplate.update(sql,user.getNickname(),user.getSex(),user.getAge(),user.getTelephone(),user.getEmail(),user.getUserId());
     }
 }

@@ -3,45 +3,63 @@ package org.blog.entity;
 
 public class User {
 
-  private long id;
-  private String username;
+  private long userId;
+  private String userName;
   private String password;
   private String nickname;
-  private String headerimg;
+  private String sex;
+  private long age;
+  private String telephone;
+  private String email;
+  private String image;
 
-  public User(long id, String username, String password, String nickname, String headerimg) {
-    this.id = id;
-    this.username = username;
+  public User(long userId, String userName, String password, String nickname, String sex, long age, String telephone, String email, String image) {
+    this.userId = userId;
+    this.userName = userName;
     this.password = password;
     this.nickname = nickname;
-    this.headerimg = headerimg;
+    this.sex = sex;
+    this.age = age;
+    this.telephone = telephone;
+    this.email = email;
+    this.image = image;
   }
 
-  public User(String username, String password, String nickname) {
-    this.username = username;
+  public User(String userName, String password, String nickname, String sex, long age, String telephone, String email) {
+    this.userName = userName;
     this.password = password;
     this.nickname = nickname;
+    this.sex = sex;
+    this.age = age;
+    this.telephone = telephone;
+    this.email = email;
+  }
+
+  public User(String userName, String password) {
+
+    this.userName = userName;
+    this.password = password;
   }
 
   public User() {
 
   }
 
-  public long getId() {
-    return id;
+  public long getUserId() {
+    return userId;
   }
 
-  public void setId(long id) {
-    this.id = id;
+  public void setUserId(long userId) {
+    this.userId = userId;
   }
 
 
-  public String getUsername() {
-    return username;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
 
@@ -63,12 +81,48 @@ public class User {
   }
 
 
-  public String getHeaderimg() {
-    return headerimg;
+  public String getSex() {
+    return sex;
   }
 
-  public void setHeaderimg(String headerimg) {
-    this.headerimg = headerimg;
+  public void setSex(String sex) {
+    this.sex = sex;
+  }
+
+
+  public long getAge() {
+    return age;
+  }
+
+  public void setAge(long age) {
+    this.age = age;
+  }
+
+
+  public String getTelephone() {
+    return telephone;
+  }
+
+  public void setTelephone(String telephone) {
+    this.telephone = telephone;
+  }
+
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 
 }

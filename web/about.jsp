@@ -30,8 +30,8 @@
             <p>
               <span class="name">小明</span><br />
               <span class="age">24岁</span><br />
-              <span class="Career">设计师, 前端工程师</span><br />
-              <span class="interest">爱好旅游,打游戏</span>
+              <span class="sex">女</span><br />
+              <%--<span class="interest">爱好旅游,打游戏</span>--%>
             </p>
           </div>
         </div>
@@ -76,9 +76,9 @@
         <div class="cont">
           <img src="res/img/erweima.jpg">
           <div class="text">
-            <p class="WeChat">微信：<span>1234567890</span></p>
-            <p class="qq">qq：<span>123456789</span></p>
-            <p class="iphone">电话：<span>123456789</span></p>
+            <%--<p class="WeChat">微信：<span>1234567890</span></p>--%>
+            <p>Email：<span class="email">123456789</span></p>
+            <p>电话：<span  class="iphone">123456789</span></p>
           </div>
         </div>
       </div>
@@ -94,6 +94,14 @@
     }).use(['element','laypage','form','layer','menu'],function(){
       element = layui.element,laypage = layui.laypage,form = layui.form,layer = layui.layer,menu = layui.menu;
       menu.init();
+    })
+    $(function () {
+        var message = JSON.parse(sessionStorage.getItem("user"));
+        $("[class='name']").html(message.nickname)
+        $("[class='age']").html(message.age)
+        $("[class='sex']").html(message.sex)
+        $("[class='iphone']").html(message.telephone)
+        $("[class='email']").html(message.email)
     })
   </script>
 </body>

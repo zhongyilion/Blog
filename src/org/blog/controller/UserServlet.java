@@ -35,7 +35,11 @@ public class UserServlet extends BaseServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String nickname = request.getParameter("nickname");
-        User user = new User(username, password, nickname);
+        String sex = request.getParameter("sex");
+        String age = request.getParameter("age");
+        String telephone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        User user = new User(username, password, nickname,sex,Long.parseLong(age),telephone,email);
         userService.register(user);
         response.sendRedirect("../index.jsp");
     }
@@ -48,5 +52,23 @@ public class UserServlet extends BaseServlet {
             WriteValue("false",response);//不存在返回false
         }
     }
+    public void editUserMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String nickname = request.getParameter("nickname");
+        String sex = request.getParameter("sex");
+        String age = request.getParameter("age");
+        String telephone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        User user = userService.queryByName(username);
+        user.setNickname(nickname);
+        user.setSex(sex);
+        user.setAge(Long.parseLong(age));
+        user.setTelephone(telephone);
+        user.setEmail(email);
+        userService.editUserMessage(user);
+        WriteValue(user,response);
+//        response.sendRedirect("../index.jsp");
+    }
+
 
 }
