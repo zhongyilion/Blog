@@ -100,7 +100,7 @@
                 $("#three").css("display","")
                 $("#four").css("display","")
                 var user = JSON.parse(sessionStorage.getItem("user"))
-                $("#nickname").html('<img src="'+user.image+'" class="layui-nav-img"> '+user.nickname+'')
+                // $("#nickname").html('<img src="'+user.image+'" class="layui-nav-img"> '+user.nickname+'')
 
                 // $("#nickname").html('<img src="'+user.image+'" class="layui-nav-img">'+user.nickname)
                 // alert(user.nickname)
@@ -254,9 +254,9 @@
             showuser(JSON.parse(sessionStorage.getItem("user")))
         }
 
-        layui.use(['element','layer','jquery','form'],function () {
+        layui.use(['element','layer','jquery','form','upload'],function () {
             var element = layui.element;
-            var layer = layui.layer,form = layui.form,$ = layui.jquery;
+            var layer = layui.layer,form = layui.form,$ = layui.jquery,upload=layui.upload;
             /*
                为登陆添加点击事件（弹窗）
             */
@@ -346,7 +346,7 @@
                     $("#two").css("display","none")
                     $("#three").css("display","")
                     $("#four").css("display","")
-                    $("#nickname").html('<img src="'+user.image+'" class="layui-nav-img"> '+user.nickname+'')
+
                     layer.closeAll()
                     element.init()
                     return false;
@@ -452,10 +452,41 @@
             $("#demo3").find("[name='email']:input").val(message.email)
 
         })
+        $("#nickname").html('<img src="'+user.image+'" class="layui-nav-img" id="test1" style="cursor: pointer"> '+user.nickname+'')
 
-        layui.use(['element','form'],function () {
-            var element = layui.element,form = layui.form;
+        layui.use(['element','form','upload'],function () {
+            var element = layui.element,form = layui.form,upload=layui.upload;
+            var uploadInst = upload.render({
+                elem: '#test1'
+                ,url: '/user/upload'
+                // ,feild: 'mf'
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                }
+                ,done: function(res){
+                    //如果上传失败
+                    if(res.code > 0){
+                        return layer.msg('上传失败');
+                    }else if (res.code == 0){
+                        sessionStorage.setItem("user",JSON.stringify(res.user))
+                        // location.reload()
+                        $("#test1").attr("src",res.user.image)
+                        return layer.msg('修改成功!')
+                    }
 
+                }
+                ,error: function(){
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function(){
+                        uploadInst.upload();
+                    });
+                }
+            });
             element.init()
         })
     }

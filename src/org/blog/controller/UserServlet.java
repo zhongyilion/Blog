@@ -6,12 +6,21 @@ import org.blog.service.UserService;
 import org.blog.service.serviceimpl.UserServiceImpl;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
+@MultipartConfig
 @WebServlet("/user/*")
 public class UserServlet extends BaseServlet {
     public UserService userService = new UserServiceImpl();
@@ -68,6 +77,54 @@ public class UserServlet extends BaseServlet {
         userService.editUserMessage(user);
         WriteValue(user,response);
 //        response.sendRedirect("../index.jsp");
+    }
+
+    public void upload(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = (User)request.getSession().getAttribute("user");
+        request.setCharacterEncoding("UTF-8");
+        Part mf = request.getPart("file");
+        System.out.println(mf.getHeader("Content-Disposition"));
+        /**
+         * header 包含文件头信息 具体内容为:form-data; name="file"; filename="`)XDE4]R_X%CAM}`@X]X_S5.png"
+         */
+        String header = mf.getHeader("Content-Disposition");
+        //得到文件后缀
+        String end = header.substring(header.lastIndexOf('.'),header.length()-1);
+//        String realPath = request.getServletContext().getRealPath("/upload");
+//        System.out.println(realPath);
+//        mf.write("upload"+"/aaa.jpg");
+        String filename = UUID.randomUUID().toString();
+        String path = request.getServletContext().getRealPath("res/imgs");
+//        System.out.println(path);
+        String fullpath = path+"\\"+user.getUserId()+"\\"+filename+end;
+        //创建每个用户的头像存放路径
+        new File(path+"\\"+user.getUserId()).mkdir();
+        FileOutputStream out = new FileOutputStream(new File(fullpath));
+        InputStream in=mf.getInputStream();
+        byte[] bs=new byte[1024];
+        int len=-1;
+        while((len=in.read(bs))!=-1){
+
+            out.write(bs,0,len);
+        }
+        out.flush();
+        out.close();
+        in.close();
+
+        /**
+         * 用相对路径也能得到项目打包的相对路径
+         */
+        user.setImage("/res/imgs"+"/"+user.getUserId()+"/"+filename+end);
+        userService.editUserMessage(user);
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        Map<String,Object> data = new HashMap<>();
+        data.put("src","upload/aaa.jpg");
+        map.put("data",data);
+        map.put("user",user);
+        WriteValue(map,response);
     }
 
 

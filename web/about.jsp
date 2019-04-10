@@ -17,8 +17,7 @@
 <jsp:include page="top.jsp">
   <jsp:param name="nowPage" value="about"></jsp:param>
 </jsp:include>
-
-  <div class="about-content">
+<div class="about-content">
     <div class="w1000">
       <div class="item info">
         <div class="title">
@@ -90,10 +89,10 @@
   <script type="text/javascript" src="res/layui/layui.js"></script>
   <script type="text/javascript">
     layui.config({
-      base: '../res/js/util/'
-    }).use(['element','laypage','form','layer','menu'],function(){
-      element = layui.element,laypage = layui.laypage,form = layui.form,layer = layui.layer,menu = layui.menu;
-      menu.init();
+        base: '../res/js/util/'
+    }).use(['element','laypage','form','layer','menu','upload'],function(){
+        element = layui.element,laypage = layui.laypage,form = layui.form,layer = layui.layer,menu = layui.menu,upload=layui.upload;
+        menu.init();
     })
     $(function () {
         var message = JSON.parse(sessionStorage.getItem("user"));

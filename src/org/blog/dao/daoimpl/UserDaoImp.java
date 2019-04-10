@@ -58,7 +58,7 @@ public class UserDaoImp extends BaseDB implements UserDao {
     @Override
     public void editUserMessage(User user) {
         JdbcTemplate jdbcTemplate = jdbcTemplate();
-        String sql = "update user set nickname=?,sex=?,age=?,telephone=?,email=? where user_id = ?";
-        jdbcTemplate.update(sql,user.getNickname(),user.getSex(),user.getAge(),user.getTelephone(),user.getEmail(),user.getUserId());
+        String sql = "update user set nickname=?,sex=?,age=?,telephone=?,email=?,image=? where user_id = ?";
+        jdbcTemplate.update(sql,user.getNickname(),user.getSex(),user.getAge(),user.getTelephone(),user.getEmail(),user.getImage(),user.getUserId());
     }
 }
