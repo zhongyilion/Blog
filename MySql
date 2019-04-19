@@ -1,15 +1,24 @@
-create table user
-(
- user_id int not null,
- user_name varchar(20) not null,
- password int not null,
- sex varchar(10) not null,
- age int not null,
- telephone int not null,
- qq int not null
- image varchar(200) not null,
-)
-comment '用户表';
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user`  (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `nickname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `sex` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `age` int(11) NOT NULL,
+  `telephone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `email` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `image` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`user_id`) USING BTREE,
+  UNIQUE INDEX `user_user_id_uindex`(`user_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, 'admin', 'admin', '姣姣', '女', 18, '18871018229', '123@qq.com', '/res/imgs/1/12376da3-7fea-48f9-86c1-a76e86d2dd85.jpg');
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 create unique index user_user_id_uindex
  on user (user_id);

@@ -30,6 +30,7 @@
               <span class="name">小明</span><br />
               <span class="age">24岁</span><br />
               <span class="sex">女</span><br />
+              <span><a href="views/backstage.html">后台管理</a></span>
               <%--<span class="interest">爱好旅游,打游戏</span>--%>
             </p>
           </div>
