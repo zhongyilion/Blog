@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>博客后台管理系统</title>
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">博客后台管理</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="user">
+
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/about.jsp">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">管理列表</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">文章管理</a></dd>
+                        <dd><a href="javascript:;">我的关注</a></dd>
+                        <dd><a href="myfans.html">我的粉丝</a></dd>
+                        <!--<dd><a href="">超链接</a></dd>-->
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">解决方案</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">云市场</a></li>
+                <li class="layui-nav-item"><a href="">发布商品</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body layui-container" style="margin-left: 100px">
+        <!-- 内容主体区域 -->
+        <h2>文章列表</h2>
+        <hr>
+        <button class="layui-btn"><a href="writearticle.html">添加文章</a></button>
+        <hr>
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="../../res/js/util/jquery-3.3.1.js"></script>
+<script src="../../res/layui/layui.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element','layer'], function(){
+        var element = layui.element,layer = layui.layer;
+
+    });
+</script>
+<script>
+    var user = JSON.parse(sessionStorage.getItem("user"))
+    $("#user").html('<img src="'+user.image+'" class="layui-nav-img" id="test1" style="cursor: pointer"> '+user.nickname+'')
+    // $("img").attr("src",user.image)
+</script>
+<script>
+    layui.use(['table','layer','element'], function(){
+        var table = layui.table,
+            layer = layui.layer,
+            element = layui.element;
+
+        table.render({
+            elem: '#test'
+            ,url:'/article/showAllArticle'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[
+                {field:'articleId', width:80, title: 'ID', sort: true}
+                ,{field:'time', width:120, title: '创建时间'}
+                ,{field:'title', width:120, title: '标题'}
+                ,{field:'dianzan', width:80, title: '点赞数'}
+                ,{field:'pinlum',width:80, title: '评论数'} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                ,{field:'content', title: '内容'}
+                // ,{field:'user.sex', title: '作者'}
+                ,{fixed: 'right', width: 165,title:'操作', align:'center', toolbar: '#barDemo'}
+            ]]
+        });
+        //监听行工具事件
+        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent === 'detail'){
+                // layer.msg('查看操作');
+                // layer.msg(data.articleId)
+                $.post(
+                    "/article/queryArticleById",
+                    {"articleId":data.articleId},
+                    function (result) {
+                        location.href = "/details.jsp"
+                    }
+                )
+            } else if(layEvent === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    layer.close(index);
+                    //向服务端发送删除指令
+                });
+            } else if(layEvent === 'edit'){
+                layer.msg('编辑操作');
+            }
+        });
+
+    });
+</script>
+</body>
+</html>
