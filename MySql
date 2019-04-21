@@ -161,21 +161,19 @@ alter table picture
 
 create table message
 (
- message_user_id int not null,
- user_id int not null,
- message_contents varchar(2000) not null,
- message_time int not null,
- have_read varchar(10) not null
+  message_id int auto_increment,
+  message_user_id varchar(20) not null,
+  user_id varchar(20) not null,
+  message_contents longtext not null,
+  message_time datetime not null,
+  have_read int not null,
+  reply_id int null,
+  constraint message_pk
+    primary key (message_id),
+  constraint message_fk
+    foreign key (reply_id) references message (message_id)
 )
-comment '留言表';
-
-create unique index message_message_user_id_uindex
- on message (message_user_id);
-
-alter table message
- add constraint message_pk
-  primary key (message_user_id);
-
+  comment '留言表/回复表';
 
 
 
