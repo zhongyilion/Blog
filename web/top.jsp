@@ -527,7 +527,13 @@
     * */
     function exit() {
         // alert("123")
-        sessionStorage.removeItem("user")
-        location.reload()
+
+        $.post(
+            "/user/exit",
+            function () {
+                sessionStorage.removeItem("user")
+                location.reload()
+            }
+        )
     }
 </script>

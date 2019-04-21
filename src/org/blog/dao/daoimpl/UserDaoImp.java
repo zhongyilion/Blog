@@ -7,9 +7,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.List;
+
 public class UserDaoImp extends BaseDB implements UserDao {
     /**
      * 根据用户名和密码查询数据
+     * 解决冲突
      * @param name
      * @param psw
      * @return
@@ -60,5 +63,31 @@ public class UserDaoImp extends BaseDB implements UserDao {
         JdbcTemplate jdbcTemplate = jdbcTemplate();
         String sql = "update user set nickname=?,sex=?,age=?,telephone=?,email=?,image=? where user_id = ?";
         jdbcTemplate.update(sql,user.getNickname(),user.getSex(),user.getAge(),user.getTelephone(),user.getEmail(),user.getImage(),user.getUserId());
+    }
+
+    @Override
+    public List<User> showAllUsers() {
+        JdbcTemplate jdbcTemplate = jdbcTemplate();
+        String sql = "select * from user";
+        List<User> list = null;
+        try {
+            list = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(User.class));
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public User queryById(int id) {
+        JdbcTemplate jdbcTemplate = jdbcTemplate();
+        String sql = "select * from user where user_id = ?";
+        User user=null;
+        try {
+            user = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), id);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }

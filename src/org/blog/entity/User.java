@@ -13,16 +13,7 @@ public class User {
   private String email;
   private String image;
 
-  public User(long userId, String userName, String password, String nickname, String sex, long age, String telephone, String email, String image) {
-    this.userId = userId;
-    this.userName = userName;
-    this.password = password;
-    this.nickname = nickname;
-    this.sex = sex;
-    this.age = age;
-    this.telephone = telephone;
-    this.email = email;
-    this.image = image;
+  public User() {
   }
 
   public User(String userName, String password, String nickname, String sex, long age, String telephone, String email) {
@@ -33,16 +24,6 @@ public class User {
     this.age = age;
     this.telephone = telephone;
     this.email = email;
-  }
-
-  public User(String userName, String password) {
-
-    this.userName = userName;
-    this.password = password;
-  }
-
-  public User() {
-
   }
 
   public long getUserId() {

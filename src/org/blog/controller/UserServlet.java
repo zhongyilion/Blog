@@ -1,6 +1,8 @@
 package org.blog.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.blog.dao.UserDao;
+import org.blog.dao.daoimpl.UserDaoImp;
 import org.blog.entity.User;
 import org.blog.service.UserService;
 import org.blog.service.serviceimpl.UserServiceImpl;
@@ -16,14 +18,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @MultipartConfig
 @WebServlet("/user/*")
 public class UserServlet extends BaseServlet {
     public UserService userService = new UserServiceImpl();
+    public UserDao userDao = new UserDaoImp();
 
 
     /**
@@ -124,6 +125,27 @@ public class UserServlet extends BaseServlet {
         data.put("src","upload/aaa.jpg");
         map.put("data",data);
         map.put("user",user);
+        WriteValue(map,response);
+    }
+
+    public void exit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getSession().removeAttribute("user");
+    }
+
+    /**
+     * 查询所有用户
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void showAllUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<User> users = userDao.showAllUsers();
+        Map<String,Object> map = new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",users.size());
+        map.put("data",users);
         WriteValue(map,response);
     }
 
