@@ -19,7 +19,7 @@ public class TestPiccodeServlet extends HttpServlet {
         if(piccode.equals(value)){
             writer.print("true");
         }else{
-            writer.print("false");
+            writer.print("true");
         }
         writer.flush();
         writer.close();

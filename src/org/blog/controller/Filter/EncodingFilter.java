@@ -12,7 +12,7 @@ public class EncodingFilter implements Filter {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        System.out.println("------------------------------------");
+//        System.out.println("------------------------------------");
         HttpServletRequest request=(HttpServletRequest)req;
         request.setCharacterEncoding("utf-8");
 

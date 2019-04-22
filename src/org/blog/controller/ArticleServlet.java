@@ -46,10 +46,64 @@ public class ArticleServlet extends BaseServlet{
         Article article = new Article(sdf.format(date),title,"",0,0,content,user);
         articleDao.addArticle(article);
     }
+
+    /**
+     * 返回文章的信息
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public void queryArticleById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("articleId");
         Article article = articleDao.queryArticleById(Long.parseLong(id));
         request.getSession().setAttribute("article",article);
-//        WriteValue(article,response);
     }
+
+    public void deleteById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("articleId");
+        articleDao.deleteById(Long.parseLong(id));
+    }
+
+    /**
+     * 编辑文章的中转站
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void skipeditpage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("articleId");
+        Article article = articleDao.queryArticleById(Long.parseLong(id));
+        request.getSession().setAttribute("article",article);
+//        request.getRequestDispatcher("views/backstage/editorarticle.jsp").forward(request,response);
+    }
+    public void editArticle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        String userId = request.getParameter("userId");
+        String articleId = request.getParameter("articleId");
+        User user = userDao.queryById(Integer.parseInt(userId));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Article article = new Article(sdf.format(date),title,"",0,0,content,user);
+        article.setArticleId(Long.parseLong(articleId));
+        articleDao.editArticle(article);
+        request.getSession().removeAttribute("article");
+    }
+
+    public void queryLastAriticle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("articleId");
+        Article article = articleDao.queryLastAriticle(Integer.parseInt(id));
+        WriteValue(article,response);
+        request.getSession().setAttribute("article",article);
+    }
+
+    public void queryNextAriticle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("articleId");
+        Article article = articleDao.queryNextAriticle(Integer.parseInt(id));
+        WriteValue(article,response);
+        request.getSession().setAttribute("article",article);
+    }
+
 }

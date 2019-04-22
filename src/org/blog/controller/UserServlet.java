@@ -149,5 +149,12 @@ public class UserServlet extends BaseServlet {
         WriteValue(map,response);
     }
 
+    public void showpersoninfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("userId");
+        User user = userDao.queryById(Integer.parseInt(id));
+        request.setAttribute("personinfo",user);
+        request.getRequestDispatcher("personinformation.jsp").forward(request,response);
+    }
+
 
 }

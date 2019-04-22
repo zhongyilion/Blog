@@ -15,6 +15,20 @@ public class Article {
 //  private long userId;
   private User user;
 
+  @Override
+  public String toString() {
+    return "Article{" +
+            "articleId=" + articleId +
+            ", time='" + time + '\'' +
+            ", title='" + title + '\'' +
+            ", image='" + image + '\'' +
+            ", dianzan=" + dianzan +
+            ", pinlum=" + pinlum +
+            ", content='" + content + '\'' +
+            ", user=" + user +
+            '}';
+  }
+
   public User getUser() {
     return user;
   }

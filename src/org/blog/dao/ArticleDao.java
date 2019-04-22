@@ -8,4 +8,8 @@ public interface ArticleDao {
     public List<Article> showAllArticle(int userId);
     public void addArticle(Article article);
     public Article queryArticleById(Long id);
+    public void deleteById(Long id);
+    public void editArticle(Article article);
+    public Article queryNextAriticle(int id);
+    public Article queryLastAriticle(int id);
 }

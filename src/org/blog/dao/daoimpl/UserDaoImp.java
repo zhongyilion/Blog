@@ -17,9 +17,10 @@ public class UserDaoImp extends BaseDB implements UserDao {
      * @param psw
      * @return
      */
+    JdbcTemplate jdbcTemplate = jdbcTemplate();
     @Override
     public User login(String name, String psw) {
-        JdbcTemplate jdbcTemplate = jdbcTemplate();
+
         String sql = "select * from user where user_name = ? and password = ?";
         User user = null;
         try {
@@ -36,7 +37,6 @@ public class UserDaoImp extends BaseDB implements UserDao {
      */
     @Override
     public void register(User user) {
-        JdbcTemplate jdbcTemplate = jdbcTemplate();
         String sql = "insert into user values (null,?,?,?,?,?,?,?,'res/imgs/1.jpg')";
         jdbcTemplate.update(sql,user.getUserName(),user.getPassword(),user.getNickname(),user.getSex(),user.getAge(),user.getTelephone(),user.getEmail());
     }
@@ -48,7 +48,6 @@ public class UserDaoImp extends BaseDB implements UserDao {
      */
     @Override
     public User queryByName(String name) {
-        JdbcTemplate jdbcTemplate = jdbcTemplate();
         String sql = "select * from user where user_name = ?";
         User user=null;
         try{
@@ -60,14 +59,12 @@ public class UserDaoImp extends BaseDB implements UserDao {
 
     @Override
     public void editUserMessage(User user) {
-        JdbcTemplate jdbcTemplate = jdbcTemplate();
         String sql = "update user set nickname=?,sex=?,age=?,telephone=?,email=?,image=? where user_id = ?";
         jdbcTemplate.update(sql,user.getNickname(),user.getSex(),user.getAge(),user.getTelephone(),user.getEmail(),user.getImage(),user.getUserId());
     }
 
     @Override
     public List<User> showAllUsers() {
-        JdbcTemplate jdbcTemplate = jdbcTemplate();
         String sql = "select * from user";
         List<User> list = null;
         try {
@@ -80,7 +77,6 @@ public class UserDaoImp extends BaseDB implements UserDao {
 
     @Override
     public User queryById(int id) {
-        JdbcTemplate jdbcTemplate = jdbcTemplate();
         String sql = "select * from user where user_id = ?";
         User user=null;
         try {

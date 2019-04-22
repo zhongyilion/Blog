@@ -36,8 +36,8 @@
                   <%--<p>以前爷爷都是用扁担一头面叶一头板鸡挑到街上摊位上卖，现在爷爷年纪大了，只能用三轮车推着。摊位摆好奶奶就会慢悠悠的拎着一个保温桶和一个小红桶过来，保温桶里装的是卤鸡蛋，小红桶留着装别人吃剩的骨头喂狗。他们只有晚上出摊，收完摊已经要9点钟了，回去还要洗一天用的抹布和衣服，爷爷奶奶都非常爱干净，摊上的所有抹布纱布都是白色的每天洗的一个油点都看不到。9年前奶奶去世了，爷爷奶奶青梅竹马感情非常好，奶奶去世的时候爷爷甚至还要求过把奶奶埋在院子里。现在爷爷有时候会偷偷跟我说，你奶奶昨天回来看我了，她还给我掖被子，我知道是她，我跟她说你别挂念我，我好的很 跑题了。</p>--%>
                   <%--<p>昨天我给爷爷打电话，他跟我说他卖板鸡有人给他拍照，他问别人你拍我干嘛，那个人回答他说我给你照片放到网上，你生意会更好，我爷爷说你不用放网上我都不够卖的。</p>--%>
                   <div class="btn-box">
-                    <button class="layui-btn layui-btn-primary">上一篇</button>
-                    <button class="layui-btn layui-btn-primary">下一篇</button>
+                    <button class="layui-btn layui-btn-primary" id="lastarticle">上一篇</button>
+                    <button class="layui-btn layui-btn-primary" id="nextarticle">下一篇</button>
                   </div>
                 </div>
                 <div class="form">
@@ -114,7 +114,39 @@
   </div>
 <script>
   $(function () {
+      layui.use(['layer','jquery'],function () {
+          var layer=layui.layer,$=layui.jquery;
+          //上一篇
+          $("#lastarticle").click(function () {
+              $.post(
+                  "/article/queryLastAriticle",
+                  {"articleId":"${sessionScope.article.articleId}"},
+                  function (article) {
+                      if(article==null)
+                          layer.msg("这已经是第一篇文章了")
+                      else{
+                          location.href = "details.jsp"
+                      }
+                  }
+              )
+          })
 
+          //下一篇
+          $("#nextarticle").click(function () {
+              $.post(
+                  "/article/queryNextAriticle",
+                  {"articleId":"${sessionScope.article.articleId}"},
+                  function (article) {
+                      if(article==null)
+                          layer.msg("这已经是最后一篇文章了")
+                      else{
+                          location.href = "details.jsp"
+                      }
+                  }
+              )
+          })
+
+      })
   })
 </script>
   <script type="text/html" id="laytplCont">

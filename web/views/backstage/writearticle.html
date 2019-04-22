@@ -115,8 +115,8 @@
             elem: '#r_date'
         });
     });
-    layui.use('layedit', function(){
-        var layedit = layui.layedit;
+    layui.use(['layedit','layer'], function(){
+        var layedit = layui.layedit,layer = layui.layer;
         layedit.build('demo'); //建立编辑器
         var index = layedit.build('demo')
         var user = JSON.parse(sessionStorage.getItem("user"))
@@ -131,6 +131,14 @@
                     $("#content").html("<h1>添加成功!</h1>")
                 }
             )
+        })
+        $("#cleanBtn").click(function () {
+            layer.confirm('确认清空你已经写的吗？',function (mm) {
+                layer.close(mm)
+                layedit.setContent(index, "", false);
+                // layer.msg($("#demo").val())
+
+            })
         })
     });
 </script>

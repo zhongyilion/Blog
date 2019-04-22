@@ -16,7 +16,7 @@ public class BaseServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //获取请求地址
         String uri = req.getRequestURI(); //    /user/login
-        System.out.println(uri);
+//        System.out.println(uri);
         //获取请求方法
         String methodName = uri.substring(uri.lastIndexOf('/')+1);
         System.out.println(methodName);
