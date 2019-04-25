@@ -1,27 +1,27 @@
 package org.blog.entity;
 
 public class Message {
-    private long message_id;
-    private long message_user_id;
-    private User user;
+    private int message_id;
+    private int message_user_id;
     private String message_contents;
     private String message_time;
     private int have_read;
-    private long reply_id;
+    private int reply_id;
+    private User user;
 
-    public long getMessage_id() {
+    public int getMessage_id() {
         return message_id;
     }
 
-    public void setMessage_id(long message_id) {
+    public void setMessage_id(int message_id) {
         this.message_id = message_id;
     }
 
-    public long getMessage_user_id() {
+    public int getMessage_user_id() {
         return message_user_id;
     }
 
-    public void setMessage_user_id(long message_user_id) {
+    public void setMessage_user_id(int message_user_id) {
         this.message_user_id = message_user_id;
     }
 
@@ -57,11 +57,11 @@ public class Message {
         this.have_read = have_read;
     }
 
-    public long getReply_id() {
+    public int getReply_id() {
         return reply_id;
     }
 
-    public void setReply_id(long reply_id) {
+    public void setReply_id(int reply_id) {
         this.reply_id = reply_id;
     }
 
