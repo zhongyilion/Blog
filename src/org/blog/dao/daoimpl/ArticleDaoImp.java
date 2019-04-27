@@ -14,11 +14,11 @@ public class ArticleDaoImp extends BaseDB implements ArticleDao {
     UserDao userDao = new UserDaoImp();
     JdbcTemplate jdbcTemplate = jdbcTemplate();
     @Override
-    public List<Article> showAllArticle(int userId) {
-        String sql = "select * from article where user_id = ?";
+    public List<Article> showAllArticle(int userId,int nowpage,int limit) {
+        String sql = "select * from article where user_id = ? limit ?,?";
         List<Article> articles=null;
         try {
-            articles = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Article.class),userId);
+            articles = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Article.class),userId,(nowpage-1)*limit,limit);
             for(Article a:articles){
                 a.setUser(userDao.queryById(userId));
             }
@@ -83,6 +83,13 @@ public class ArticleDaoImp extends BaseDB implements ArticleDao {
             e.printStackTrace();
         }
         return article;
+    }
+
+    @Override
+    public int countAriticle(int id) {
+        String sql = "select count(*) from article where user_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class,id);
+        return count;
     }
 
     @Override
