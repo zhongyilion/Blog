@@ -15,8 +15,6 @@
 </head>
 <body>
 <%@include file="top.jsp"%>
-
-
   <div class="content whisper-content leacots-content details-content">
     <div class="cont w1000">
       <div class="whisper-list">
