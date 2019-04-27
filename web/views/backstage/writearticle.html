@@ -117,6 +117,12 @@
     });
     layui.use(['layedit','layer'], function(){
         var layedit = layui.layedit,layer = layui.layer;
+        layedit.set({
+            uploadImage: {
+                url: '/article/upload' //接口url
+                ,type: 'post' //默认post
+            }
+        });
         layedit.build('demo'); //建立编辑器
         var index = layedit.build('demo')
         var user = JSON.parse(sessionStorage.getItem("user"))
